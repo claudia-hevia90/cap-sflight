@@ -6,6 +6,22 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.codespaces",
+				"qwtel.sqlite-viewer",
+				"dbaeumer.vscode-eslint",
+				"GitHub.copilot",
+				"esbenp.prettier-vscode",
+				"mechatroner.rainbow-csv",
+				"humao.rest-client",
+				"SAPSE.vscode-cds",
+				"ms-vscode-remote.remote-containers",
+				"SAPSE.sap-ux-fiori-tools-extension-pack"
+			]
+		}
+	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
