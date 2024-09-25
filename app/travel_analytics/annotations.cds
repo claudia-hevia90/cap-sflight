@@ -81,6 +81,7 @@ annotate service.Bookings with @(
 annotate service.Bookings with @UI.LineItem : [
   {
     Value          : TravelID,
+    Label : '{i18n>TravelID}',
     @UI.Importance : #High,
     @HTML5.CssDefaults: {width:'8em'},
   }, {
@@ -90,21 +91,26 @@ annotate service.Bookings with @UI.LineItem : [
     @HTML5.CssDefaults: {width:'8em'},
   }, {
     Value          : airline,
+    Label : '{i18n>AirlineID}',
     @UI.Importance : #High,
     @HTML5.CssDefaults: {width:'14em'},
   }, {
     Value          : ConnectionID,
+    Label : '{i18n>ConnectionID}',
     @UI.Importance : #High,
     @HTML5.CssDefaults: {width:'8em'},
   }, {
     Value          : FlightDate,
+    Label : '{i18n>FlightDate}',
     @UI.Importance : #High,
   }, {
     Value          : FlightPrice,
+    Label : '{i18n>FlightPrice}',
     @UI.Importance : #High,
     @HTML5.CssDefaults: {width:'12em'},
   }, {
     Value          : status,
+    Label : '{i18n>BookingStatus}',
     @UI.Importance : #High,
     @HTML5.CssDefaults: {width:'8em'},
   }
@@ -187,7 +193,8 @@ annotate service.Bookings with @(
           $Type : 'Common.ValueListParameterDisplayOnly',
           ValueListProperty : 'Name',
       }]
-    }
+    },
+    Common.Label : '{i18n>AirlineID}',
   )
 };
 
@@ -230,6 +237,7 @@ annotate service.Bookings with @(
         ValueListProperty : 'code',
       }]
     },
+    Common.Label : '{i18n>BookingStatus}',
     //Common.ValueListWithFixedValues : true
   )
 };
@@ -260,15 +268,18 @@ annotate service.Bookings with @(
     }]
   }
 ) {
-  FlightDate @Common.ValueList #vlFlightDate : {
-    CollectionPath               : 'Bookings',
-    PresentationVariantQualifier : 'pvFlightDate',
-    Parameters                   : [{
-      $Type             : 'Common.ValueListParameterInOut',
-      LocalDataProperty : FlightDate,
-      ValueListProperty : 'FlightDate'
-    }]
-  };
+  FlightDate @(
+    Common.ValueList #vlFlightDate : {
+        CollectionPath               : 'Bookings',
+        PresentationVariantQualifier : 'pvFlightDate',
+        Parameters                   : [{
+          $Type             : 'Common.ValueListParameterInOut',
+          LocalDataProperty : FlightDate,
+          ValueListProperty : 'FlightDate'
+        }]
+      },
+    Common.Label : '{i18n>FlightDate}',
+);
 };
 
 
@@ -361,25 +372,33 @@ annotate service.Bookings with @UI : {
   FieldGroup #TravelInformation : { Data : [
     { Value : to_Travel.TravelID,
       Label : '{i18n>TravelID}'            },
-    { Value : to_Travel.Description        },
-    { Value : to_Travel.to_Agency.Name,    },
-    { Value : to_Travel.CustomerName,      },
+    { Value : to_Travel.Description,
+        Label : '{i18n>Description}',        },
+    { Value : to_Travel.to_Agency.Name,
+        Label : '{i18n>AgencyName}',    },
+    { Value : to_Travel.CustomerName,
+        Label : '{i18n>CustomerName}',      },
     { Value : to_Travel.TravelStatus.code,
       Label : '{i18n>Status}'              },    // why does the label not come from below?
   ]},
   FieldGroup #BookingInformation : { Data : [
     { Value : BookingID,
       Label : '{i18n>BookingID}'        },
-    { Value : BookingDate               },
-    { Value : FlightDate,               },
-    { Value : FlightPrice               },
+    { Value : BookingDate,
+        Label : '{i18n>BookingDate}',               },
+    { Value : FlightDate,
+        Label : '{i18n>FlightDate}',               },
+    { Value : FlightPrice,
+        Label : '{i18n>FlightPrice}',               },
     { Value : status,
       Label : '{i18n>Status}'           },
   ]},
   FieldGroup #FlightInformation : { Data : [
-    { Value : airline,                  },
+    { Value : airline,
+        Label : '{i18n>AirlineID}',                  },
     { Value : to_Carrier.AirlinePicURL, },
-    { Value : ConnectionID              },
+    { Value : ConnectionID,
+        Label : '{i18n>ConnectionID}',              },
     // Java doesn't work with these association paths
     // { Value : to_Flight.PlaneType       },
     // { Value : to_Flight.to_Connection.DepartureAirport.AirportID,
@@ -389,9 +408,12 @@ annotate service.Bookings with @UI : {
     // { Value : to_Flight.to_Connection.Distance, },
 
     // Workaround:
-    { Value : PlaneType       },
-    { Value : DepAirport,     },
-    { Value : DestAirport     },
+    { Value : PlaneType,
+        Label : '{i18n>PlaneType}',       },
+    { Value : DepAirport,
+        Label : '{i18n>DepartureAirport}',     },
+    { Value : DestAirport,
+        Label : '{i18n>ArrivalAirport}',     },
     { Value : Distance,       },
   ]},
 };
@@ -402,3 +424,7 @@ annotate service.Bookings with @UI.SelectionFields : [
   status,
   airline
 ];
+annotate service.Bookings with {
+    CombinedID @Common.Label : '{i18n>TravelbookingId}'
+};
+
